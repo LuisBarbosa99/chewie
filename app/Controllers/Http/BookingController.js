@@ -33,7 +33,8 @@ class BookingController {
     const {name, date, petshop_id, service_id, pet_id} = request.body;
 
     const client = await Client.findBy('user_id',auth.user.id);
-   
+    if(!client) return response.status(406).json({error:"Client was not registered"});
+
     const booking = await Booking.create({
       name,
       date,

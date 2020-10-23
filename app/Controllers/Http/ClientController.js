@@ -34,6 +34,7 @@ class ClientController {
    */
   async store ({ request, auth }) {
     const {name, phone} = request.body;
+    if(auth.user.type !== 'client') return response.status(403);
 
     const client = await Client.create({ user_id: auth.user.id , name, phone});
 

@@ -28,10 +28,17 @@ class PetshopController {
    * @param {Auth} ctx.auth
    * @param {Response} ctx.response
    */
-  async store ({ request, auth }) {
+  async store ({ request, auth, response }) {
     const {name, address, phone} = request.body;
+    if(auth.user.type !== 'petshop') return response.status(403);
 
-    const petshop = await Petshop.create({
+    const petshop = await Petshop.findBy("user_id", auth.user.id);
+
+    if (petshop){
+      return response.status(200).json({message: "Petshop already exists", petshop: petshop});
+    }
+
+    petshop = await Petshop.create({
       name,
       address,
       phone,

@@ -34,9 +34,8 @@ class VetServiceController {
   async store ({ request, auth, response }) {
     const {name, value, duration, employee, description} = request.body;
     
-    if(auth.user.user_type !== 'vet') return response.status(403);
-
-    const vet = await Vet.findBy('user_id', auth.user.id)
+    const vet = await Vet.findBy('user_id', auth.user.id);
+    if(!vet) return response.status(406).json({error:"Vet was not registered"});
 
     const vetService = await VetService.create({
       name,

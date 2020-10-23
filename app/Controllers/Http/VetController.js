@@ -30,6 +30,7 @@ class VetController {
    */
   async store ({ request, auth }) {
     const {name, address, phone} = request.body;
+    if(auth.user.type !== 'vet') return response.status(403);
 
     const vet = await Vet.create({
       name,

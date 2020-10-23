@@ -15,7 +15,9 @@ class ServiceController {
    * GET services
    *
    */
-  async index () {
+  async index ({ auth, response}) {
+    if(auth.user.type !== 'petshop') return response.status(403);
+
     const services = await Service.query().with('petshop').fetch();
 
     return services;
@@ -30,12 +32,11 @@ class ServiceController {
    * @param {Auth} ctx.auth
    * @param {Response} ctx.response
    */
-  async store ({ request, auth, response}) {
+  async store ({ request, auth, response }) {
     const {name, value, duration, employee, description} = request.body;
   
-    if(auth.user.user_type !== 'petshop') return response.status(403);
-
     const petshop = await Petshop.findBy('user_id', auth.user.id);
+    if(!petshop) return response.status(406).json({error:"Petshop was not registered"});
 
     const service = await Service.create({
       name,

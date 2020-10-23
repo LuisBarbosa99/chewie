@@ -30,10 +30,11 @@ class AppointmentController {
    * @param {Request} ctx.request
    * @param {Auth} ctx.auth
    */
-  async store ({ request, auth }) {
+  async store ({ request, auth, response }) {
     const {name, date, vet_id, vet_service_id, pet_id} = request.body;
 
     const client = await Client.findBy('user_id', auth.user.id);
+    if(!client) return response.status(406).json({error:"Client was not registered"});
 
     const appointment = await Appointment.create({
       name,

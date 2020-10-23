@@ -30,10 +30,11 @@ class PetController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, auth }) {
+  async store ({ request, auth, response}) {
     const {name, pet_type, breed, age} = request.body;
 
     const client = await Client.findBy('user_id', auth.user.id);
+    if(!client) return response.status(406).json({error:"Client was not registered"});
 
     const pet = await Pet.create({
       name,
