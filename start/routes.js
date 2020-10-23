@@ -3,6 +3,11 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
+//HOME
+Route.get('/', ({request})=> {
+  return {message: "Welcome to Chewie ;)"}
+});
+
 //AUTHENTICATION
 Route.post('/register', 'AuthController.register');
 Route.post('/authenticate', 'AuthController.authenticate');
