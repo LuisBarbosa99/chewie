@@ -89,8 +89,10 @@ class VetServiceController {
    */
   async destroy ({ params, auth, response }) {
     const vetService = await VetService.findOrFail(params.id);
+    const vet = await vetService.vet().fetch();
 
-    if(vetService.vet_id !== auth.user.id) return response.status(401);
+    if(vet.user_id !== auth.user.id) 
+      return response.status(401).json({message: "Vet Service delection not authorized"});
 
     vetService.delete();
   }

@@ -6,6 +6,8 @@
 
 const Booking = use('App/Models/Booking');
 const Client = use('App/Models/Client');
+
+
 /**
  * Resourceful controller for interacting with bookings
  */
@@ -29,12 +31,12 @@ class BookingController {
    * @param {Request} ctx.request
    * @param {Auth} ctx.auth
    */
-  async store ({ request, auth }) {
+  async store ({ request, auth, response }) {
     const {name, date, petshop_id, service_id, pet_id} = request.body;
 
-    const client = await Client.findBy('user_id',auth.user.id);
+    const client = await Client.findByOrFail('user_id', auth.user.id);
     if(!client) return response.status(406).json({error:"Client was not registered"});
-
+   
     const booking = await Booking.create({
       name,
       date,
@@ -88,7 +90,10 @@ class BookingController {
   async destroy ({ params, auth, response }) {
     const booking = await Booking.findOrFail(params.id);
 
-    if(booking.client_id !== auth.user.id) return response.status(401);
+    const client = await booking.client().fetch();
+
+    if(client.user_id !== auth.user.id) 
+      return response.status(401).json({message: "Booking delection not authorized"});
 
     booking.delete();
   }
