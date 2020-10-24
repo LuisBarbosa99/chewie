@@ -90,7 +90,10 @@ class ServiceController {
   async destroy ({ params, auth, response }) {
     const service = await Service.findOrFail(params.id);
 
-    if (service.petshop_id !== auth.user.id) return response.status(401);
+    const petshop = service.petshop().fetch();
+
+    if (petshop.user_id !== auth.user.id) 
+      return response.status(401).json({message: "Service delection not authorized"});
 
     service.delete();
   }

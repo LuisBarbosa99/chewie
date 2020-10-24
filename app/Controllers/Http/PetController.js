@@ -31,14 +31,14 @@ class PetController {
    * @param {Response} ctx.response
    */
   async store ({ request, auth, response}) {
-    const {name, pet_type, breed, age} = request.body;
+    const {name, type, breed, age} = request.body;
 
     const client = await Client.findBy('user_id', auth.user.id);
     if(!client) return response.status(406).json({error:"Client was not registered"});
 
     const pet = await Pet.create({
       name,
-      pet_type,
+      type,
       breed,
       age,
       client_id: client.id
@@ -88,8 +88,10 @@ class PetController {
    */
   async destroy ({ params, auth, response }) {
     const pet = await Pet.findOrFail(params.id);
-
-    if(pet.client_id !== auth.user.id) return response.status(401);
+    const client = pet.client().fetch();
+    
+    if(client.user_id !== auth.user.id) 
+      return response.status(401).json({message: "Pet delection not authorized"});
 
     pet.delete();
   }

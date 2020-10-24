@@ -88,7 +88,10 @@ class AppointmentController {
   async destroy ({ params, auth, response }) {
     const appointment = await Appointment.findOrFail(params.id);
 
-    if(appointment.client_id !== auth.user.id) return response.status(401);
+    const client = await appointment.client().fetch();
+
+    if(client.user_id !== auth.user.id) 
+      return response.status(401).json({message: "Appointment delection not authorized"});
 
     appointment.delete();
   }
