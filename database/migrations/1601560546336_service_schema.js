@@ -24,7 +24,6 @@ class ServiceSchema extends Schema {
   }
 
   down () {
-    this.drop('services')
     this.dropIfExists('services')
   }
 }
