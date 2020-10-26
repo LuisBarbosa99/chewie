@@ -4,7 +4,7 @@ const Env = use("Env");
 
 const Helpers = use("Helpers");
 const URL = require("url-parse");
-const PROD_MYSQL_DB = new URL(Env.get("CLEARDB_DATABASE_URL"));
+const PROD_MYSQL_DB = new URL(Env.get("JAWSDB_AMBER_URL"));
 
 module.exports = {
   connection: Env.get("DB_CONNECTION", "sqlite"),
