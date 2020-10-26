@@ -7,6 +7,9 @@ class Booking extends Model {
     client(){
         return this.belongsTo('App/Models/Client');
     }
+    service(){
+        return this.hasOne('App/Models/Service');
+    }
 }
 
 module.exports = Booking

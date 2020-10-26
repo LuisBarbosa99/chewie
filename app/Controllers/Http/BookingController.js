@@ -6,7 +6,8 @@
 
 const Booking = use('App/Models/Booking');
 const Client = use('App/Models/Client');
-
+const Petshop = use('App/Models/Petshop');
+const Service = use('App/Models/Service');
 
 /**
  * Resourceful controller for interacting with bookings
@@ -32,17 +33,23 @@ class BookingController {
    * @param {Auth} ctx.auth
    */
   async store ({ request, auth, response }) {
-    const {name, date, petshop_id, service_id, pet_id} = request.body;
+    const {name, date_start, date_end, petshop_username, pet_id} = request.body;
 
     const client = await Client.findByOrFail('user_id', auth.user.id);
     if(!client) return response.status(406).json({error:"Client was not registered"});
    
+    const petshop = await Petshop.findByOrFail('username', petshop_username).with('services').fetch();
+
+    const services = await petshop.load('services')
+
+    console.log(services)
+    
     const booking = await Booking.create({
       name,
-      date,
+      date_start,
+      date_end,
       client_id: client.id,
-      petshop_id,
-      service_id,
+      petshop_id: petshop.id,
       pet_id
     });
 

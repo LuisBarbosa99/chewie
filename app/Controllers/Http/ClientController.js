@@ -32,7 +32,7 @@ class ClientController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, auth }) {
+  async store ({ request, auth, response }) {
     const {name, phone} = request.body;
     if(auth.user.type !== 'client') return response.status(403);
 

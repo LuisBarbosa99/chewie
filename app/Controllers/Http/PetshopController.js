@@ -15,7 +15,10 @@ class PetshopController {
    * GET petshops
    */
   async index () {
-    const petshops = await Petshop.query().with('user').fetch();
+    let petshops = await Petshop
+      .query()
+      .with('user')
+      .fetch();
 
     return petshops;
   }
@@ -32,7 +35,7 @@ class PetshopController {
     const {name, address, phone} = request.body;
     if(auth.user.type !== 'petshop') return response.status(403);
 
-    const petshop = await Petshop.findBy("user_id", auth.user.id);
+    let petshop = await Petshop.findBy("user_id", auth.user.id);
 
     if (petshop){
       return response.status(200).json({message: "Petshop already exists", petshop: petshop});
@@ -42,6 +45,7 @@ class PetshopController {
       name,
       address,
       phone,
+      username: auth.user.username,
       user_id: auth.user.id
     });
 
@@ -69,7 +73,7 @@ class PetshopController {
    * @param {Response} ctx.response
    */
   async update ({ params, request }) {
-    const data = request.only(['name', 'address', 'phone']);
+    const data = request.only(['name', 'address', 'phone', 'username']);
     const petshop = await Petshop.find(params.id);
 
     petshop.merge(data);

@@ -7,6 +7,9 @@ class Service extends Model {
     petshop(){
         return this.belongsTo('App/Models/Petshop');
     }
+    booking(){
+        return this.hasMany('App/Models/Booking');
+    }
 }
 
 module.exports = Service

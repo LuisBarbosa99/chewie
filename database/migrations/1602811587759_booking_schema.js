@@ -8,7 +8,8 @@ class BookingSchema extends Schema {
     this.create('bookings', (table) => {
       table.increments()
       table.string('name').notNullable();
-      table.date('date').notNullable();
+      table.datetime('date_start').notNullable();
+      table.datetime('date_end').notNullable();
       table
         .integer('client_id')
         .notNullable()
