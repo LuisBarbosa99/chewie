@@ -28,12 +28,20 @@ class VetController {
    * @param {Auth} ctx.auth
    * @param {Response} ctx.response
    */
-  async store ({ request, auth }) {
+  async store ({ request, auth, response }) {
     const {name, address, phone} = request.body;
+
+    console.log(auth.user.type)
     if(auth.user.type !== 'vet') 
       return response.status(403).json({message: `Wrong user type: instead of 'vet', recieved '${auth.user.type}'`});
 
-    const vet = await Vet.create({
+    let vet = await Vet.findBy("user_id", auth.user.id);
+
+    if (vet){
+      return response.status(200).json({message: "Vet already exists", vet: vet});
+    }
+
+    vet = await Vet.create({
       name,
       address,
       phone,
