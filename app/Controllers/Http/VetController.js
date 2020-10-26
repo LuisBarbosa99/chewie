@@ -30,12 +30,14 @@ class VetController {
    */
   async store ({ request, auth }) {
     const {name, address, phone} = request.body;
-    if(auth.user.type !== 'vet') return response.status(403);
+    if(auth.user.type !== 'vet') 
+      return response.status(403).json({message: `Wrong user type: instead of 'vet', recieved '${auth.user.type}'`});
 
     const vet = await Vet.create({
       name,
       address,
       phone,
+      username: auth.user.username,
       user_id: auth.user.id
     });
 

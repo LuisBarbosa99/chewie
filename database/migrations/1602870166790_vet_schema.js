@@ -10,6 +10,9 @@ class VetSchema extends Schema {
       table.string('name').notNullable();
       table.string('address').notNullable();
       table.string('phone').notNullable();
+      table.string('username')
+        .notNullable()
+        .unique();
       table
         .float('rating')
         .notNullable()

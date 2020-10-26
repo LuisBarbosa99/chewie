@@ -33,7 +33,8 @@ class PetshopController {
    */
   async store ({ request, auth, response }) {
     const {name, address, phone} = request.body;
-    if(auth.user.type !== 'petshop') return response.status(403);
+    if(auth.user.type !== 'petshop') 
+      return response.status(403).json({message: `Wrong user type: instead of 'petshop', recieved '${auth.user.type}'`});
 
     let petshop = await Petshop.findBy("user_id", auth.user.id);
 

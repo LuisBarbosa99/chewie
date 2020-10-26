@@ -7,6 +7,9 @@ class Appointment extends Model {
     client(){
         return this.belongsTo('App/Models/Client');
     }
+    vetService(){
+        return this.hasOne('App/Models/VetService');
+    }
     
 }
 

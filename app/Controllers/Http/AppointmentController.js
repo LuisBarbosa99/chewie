@@ -5,7 +5,8 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Appointment = use('App/Models/Appointment');
-const Client = use('App/Models/Appointment');
+const Client = use('App/Models/Client');
+const Vet = use('App/Models/Vet');
 
 /**
  * Resourceful controller for interacting with appointments
@@ -31,21 +32,31 @@ class AppointmentController {
    * @param {Auth} ctx.auth
    */
   async store ({ request, auth, response }) {
-    const {name, date, vet_id, vet_service_id, pet_id} = request.body;
+    const {name, date_start, date_end, vet_username, vet_service_id, pet_id} = request.body;
 
-    const client = await Client.findBy('user_id', auth.user.id);
+    const client = await Client.findByOrFail('user_id', auth.user.id);
     if(!client) return response.status(406).json({error:"Client was not registered"});
+
+    const vet = await Vet.findByOrFail('username', vet_username);
+    const vetService = await vet.vetServices().where('id',vet_service_id).fetch();
+    const pet = await client.pets().where('id', pet_id).fetch();
 
     const appointment = await Appointment.create({
       name,
-      date,
+      date_start,
+      date_end,
       client_id: client.id,
-      vet_id,
+      vet_id: vet.id,
       vet_service_id,
       pet_id
     });
 
-    return appointment;
+    return response.json({
+      appointment,
+      pet,
+      vet,
+      vetService
+    });
   }
 
   /**

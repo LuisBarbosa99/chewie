@@ -34,7 +34,8 @@ class ClientController {
    */
   async store ({ request, auth, response }) {
     const {name, phone} = request.body;
-    if(auth.user.type !== 'client') return response.status(403);
+    if(auth.user.type !== 'client') 
+      return response.status(403).json({message: `Wrong user type: instead of 'client', recieved '${auth.user.type}'`});
 
     const client = await Client.create({ user_id: auth.user.id , name, phone});
 
@@ -48,14 +49,14 @@ class ClientController {
    *
    * @param {object} ctx
    */
-  async show ({ params }) {
-    const client = await Client.query(params.id)
-      .with('pets')
-      .with('bookings')
-      .with('appointments')
-      .fetch();
+  async show ({ params, response }) {
+    const client = await Client.find(params.id)
 
-    return client;
+    const pets = await client.pets().fetch()
+    const bookings = await client.bookings().fetch()
+    const appointments = await client.appointments().fetch()
+
+    return response.json({client, pets, bookings, appointments});
   }
 
   /**
