@@ -14,11 +14,7 @@ class ServiceSchema extends Schema {
       table.string('description');
       table
         .integer('petshop_id')
-        .notNullable()
-        .references('id')
-        .inTable('petshops')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+        .notNullable();
       table.timestamps()
     })
   }

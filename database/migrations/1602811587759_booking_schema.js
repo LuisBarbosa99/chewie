@@ -12,29 +12,14 @@ class BookingSchema extends Schema {
       table.datetime('date_end').notNullable();
       table
         .integer('client_id')
-        .notNullable()
-        .references('id')
-        .inTable('clients')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+        .notNullable();
       table
-        .integer('petshop_id')
-        .references('id')
-        .inTable('petshops')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+        .integer('petshop_id')  
       table
-        .integer('service_id')
-        .references('id')
-        .inTable('services')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+        .integer('service_id')  
       table
         .integer('pet_id')
-        .references('id')
-        .inTable('pets')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+ 
       table.timestamps()
     })
   }

@@ -14,11 +14,7 @@ class VetServiceSchema extends Schema {
       table.string('description');
       table
         .integer('vet_id')
-        .notNullable()
-        .references('id')
-        .inTable('vets')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+        .notNullable();
       table.timestamps()
     })
   }

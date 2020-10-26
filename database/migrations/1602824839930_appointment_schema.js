@@ -12,32 +12,16 @@ class AppointmentSchema extends Schema {
       table.datetime('date_end').notNullable();
       table
         .integer('client_id')
-        .notNullable()
-        .references('id')
-        .inTable('clients')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+        .notNullable();
       table
         .integer('vet_id')
-        .notNullable()
-        .references('id')
-        .inTable('vets')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+        .notNullable();
       table
         .integer('vet_service_id')
-        .notNullable()
-        .references('id')
-        .inTable('vet_services')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+        .notNullable();
       table
         .integer('pet_id')
-        .notNullable()
-        .references('id')
-        .inTable('pets')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+        .notNullable();
       table.timestamps()
     })
   }

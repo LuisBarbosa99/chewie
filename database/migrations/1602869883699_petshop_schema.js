@@ -20,11 +20,7 @@ class PetshopSchema extends Schema {
       table
         .integer('user_id')
         .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('users')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+        .notNullable();
       table.timestamps()
     })
   }

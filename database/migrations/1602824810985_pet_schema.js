@@ -13,11 +13,7 @@ class PetSchema extends Schema {
       table.integer('age');
       table
         .integer('client_id')
-        .notNullable()
-        .references('id')
-        .inTable('clients')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+        .notNullable();
       table.timestamps()
     })
   }
