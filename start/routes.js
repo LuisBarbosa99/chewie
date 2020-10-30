@@ -32,6 +32,11 @@ Route.group(()=>{
   Route.resource('pets', 'PetController').apiOnly();
 }).middleware('auth');
 
+//QUERY SERVICE
+Route.group(()=>{
+  Route.resource(':petshop_username/services', 'QueryServiceController').only(['index', 'show']);
+}).middleware('auth');
+
 //PETSHOP
 Route.group(()=>{
   Route.resource('petshops', 'PetshopController').apiOnly();
