@@ -20,7 +20,7 @@ class AppointmentSchema extends Schema {
         .integer('vet_service_id')
         .notNullable();
       table
-        .integer('pet_id')
+        .string('pet_name')
         .notNullable();
       table.timestamps()
     })

@@ -12,7 +12,7 @@ class QueryServiceController {
         return services;
     }
     
-    async show({params}){
+    async show({params, response}){
         const bookings = await Booking.query().where('service_id',params.id).fetch()
 
         return bookings;

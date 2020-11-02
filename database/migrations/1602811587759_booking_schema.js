@@ -18,7 +18,8 @@ class BookingSchema extends Schema {
       table
         .integer('service_id')  
       table
-        .integer('pet_id')
+        .string('pet_name')
+        .notNullable()
  
       table.timestamps()
     })

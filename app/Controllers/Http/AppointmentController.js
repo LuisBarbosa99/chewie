@@ -32,14 +32,14 @@ class AppointmentController {
    * @param {Auth} ctx.auth
    */
   async store ({ request, auth, response }) {
-    const {name, date_start, date_end, vet_username, vet_service_id, pet_id} = request.body;
+    const {name, date_start, date_end, vet_username, vet_service_id, pet_name} = request.body;
 
     const client = await Client.findByOrFail('user_id', auth.user.id);
     if(!client) return response.status(406).json({error:"Client was not registered"});
 
     const vet = await Vet.findByOrFail('username', vet_username);
     const vetService = await vet.vetServices().where('id',vet_service_id).fetch();
-    const pet = await client.pets().where('id', pet_id).fetch();
+    const pet = await client.pets().where('name', pet_name).fetch();
 
     const appointment = await Appointment.create({
       name,
@@ -48,7 +48,7 @@ class AppointmentController {
       client_id: client.id,
       vet_id: vet.id,
       vet_service_id,
-      pet_id
+      pet_name
     });
 
     return response.json({
@@ -79,7 +79,7 @@ class AppointmentController {
    * @param {Request} ctx.request
    */
   async update ({ params, request }) {
-    const data = request.only(['name','date','pet_id', 'vet_service_id']);
+    const data = request.only(['name','date','pet_name', 'vet_service_id']);
     const appointment = Appointment.find(params.id);
 
     appointment.merge(data);

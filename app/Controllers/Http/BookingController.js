@@ -32,14 +32,14 @@ class BookingController {
    * @param {Auth} ctx.auth
    */
   async store ({ request, auth, response }) {
-    const {name, date_start, date_end, petshop_username, service_id, pet_id} = request.body;
+    const {name, date_start, date_end, petshop_username, service_id, pet_name} = request.body;
 
     const client = await Client.findByOrFail('user_id', auth.user.id);
     if(!client) return response.status(406).json({error:"Client was not registered"});
    
     const petshop = await Petshop.findByOrFail('username', petshop_username);
     const service = await petshop.services().where('id',service_id).fetch();
-    const pet = await client.pets().where('id', pet_id).fetch();
+    const pet = await client.pets().where('name', pet_name).fetch();
 
     const booking = await Booking.create({
       name,
@@ -48,7 +48,7 @@ class BookingController {
       client_id: client.id,
       petshop_id: petshop.id,
       service_id,
-      pet_id
+      pet_name
     });
 
     return response.json({
@@ -80,7 +80,7 @@ class BookingController {
    * @param {Response} ctx.response
    */
   async update ({ params, request }) {
-      const data = request.only(['name', 'date', 'pet_id', 'service_id']);
+      const data = request.only(['name', 'date', 'pet_name', 'service_id']);
       const booking = await Booking.find(params.id);
 
       booking.merge(data);
