@@ -2,13 +2,13 @@
 node_modules
 
 # Adonis directory for storing tmp files
-server/src/tmp
+tmp
 
 # Environment variables, never commit this file
-server/src/.env
+.env
 
 # The development sqlite file
-server/src/database/adonis.sqlite
+database/adonis.sqlite
 
 .vscode
 
