@@ -1,28 +1,40 @@
-# Adonis API application
+Chewie
+======
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+Tecnologias
+-----------
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
+* AdonisJS
+* ReactJS
+* Banco de dados: SQLite3 (Desenvolvimento) e MySQL (Produção)
 
-## Setup
+Equipe
+------
 
-Use the adonis command to install the blueprint
-
-```bash
-adonis new yardstick --api-only
-```
-
-or manually clone the repo and then run `npm install`.
+* André Filho
+* Luís Barbosa
 
 
-### Migrations
+Objetivos
+---------
 
-Run the following command to run startup migrations.
+* Criar uma plataforma em que donos de pets possam comprar produtos e agendar serviços de pet shops em sua cidade;
+* Facilitar o agendamento de serviços de pet shops e consultas com veterinários, e compra de produtos para pets;
 
-```js
-adonis migration:run
-```
+Escopo do Projeto
+-----------------
+
+Cadastros (CRUDs): 
+
+* Cliente;
+* Pet Shop;
+* Veterinário;
+* Reserva;
+* Serviço;
+* Consulta veterinária; 
+
+Autenticação e Login;
+
+* Uso de JWT;
+
+
