@@ -108,5 +108,5 @@ It states our stakeholders, the justification for our work and defines costs, a 
 
 
 * Value Proposition Canvas
-![value-proposition-canvas.png](https://github.com/mrdedede/chewie/blob/master/values-proposition-canvas.png)
+![value-proposition-canvas.png](https://github.com/mrdedede/chewie/blob/master/value-proposition-canvas.png)
 Our Value Proposition Canvas aims to identify our main partners during the development of our application and, given the context where they are inserted, how our product could make a difference for them.
